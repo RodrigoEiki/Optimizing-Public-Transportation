@@ -33,7 +33,7 @@ class TransformedStation(faust.Record):
 #   places it into a new topic with only the necessary information.
 app = faust.App("stations-stream", broker="kafka://localhost:9092", store="memory://")
 # TODO: Define the input Kafka Topic. Hint: What topic did Kafka Connect output to?
-topic = app.topic("stations_postgre", value_type=Station)
+topic = app.topic("stations_postgrestations", value_type=Station)
 # TODO: Define the output Kafka Topic
 out_topic = app.topic("faust_stations_table", partitions=1)
 # TODO: Define a Faust Table
@@ -65,7 +65,8 @@ async def process_station(stations):
             order = station.order,
             line=line
         )
-        await out_topic.send(value= transformed_station)
+        
+        table[station.station_id]=transformed_station
 
 
 

@@ -84,6 +84,3 @@ class Producer:
         if self.producer is not None:
             self.producer.flush()
 
-    def time_millis(self):
-        """Use this function to get the key for Kafka Events"""
-        return int(round(time.time() * 1000))
